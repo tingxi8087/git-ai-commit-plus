@@ -20,11 +20,11 @@ async function until(check: () => boolean) {
 // Isolated Extension Development Host with the real Git API, SecretStorage,
 // webview and commit input. Only the DeepSeek endpoint is redirected to localhost.
 export async function run() {
-  const extension = vscode.extensions.getExtension('git-ai-commit-plus.git-ai-commit-plus');
+  const extension = vscode.extensions.getExtension('tingxi8087.git-ai-commit-plus');
   assert.ok(extension);
   await extension.activate();
   assert.equal(extension.isActive, true);
-  assert.equal(extension.packageJSON.version, '0.3.1');
+  assert.equal(extension.packageJSON.version, '0.3.2');
   const commands = await vscode.commands.getCommands(true);
   for (const command of ['generate', 'settings', 'cancel']) { assert.ok(commands.includes(`gitAiCommit.${command}`)); }
   assert.deepEqual(extension.packageJSON.contributes.menus['scm/title'].map((item: { command: string }) => item.command), ['gitAiCommit.generate', 'gitAiCommit.cancel']);
@@ -108,7 +108,7 @@ export async function run() {
     }
     const reportDirectory = path.resolve(__dirname, '../../artifacts');
     await mkdir(reportDirectory, { recursive: true });
-    await writeFile(path.join(reportDirectory, 'host-result-v0.3.1.json'), JSON.stringify({
+    await writeFile(path.join(reportDirectory, 'host-result-v0.3.2.json'), JSON.stringify({
       activated: true, version: extension.packageJSON.version, commandsAndMenuVerified: true, defaultsVerified: true,
       settingsTabOpened: true, secretStorageVerified: true, realGitIndexVerified: true,
       recentHistoryAndSummariesVerified: true, commitInputFilled: true, concurrentTypingPreserved: true,

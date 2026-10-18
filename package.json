@@ -2,8 +2,8 @@
   "name": "git-ai-commit-plus",
   "displayName": "Git AI Commit Plus",
   "description": "在源代码管理中一键生成中文或英文提交说明，支持 DeepSeek。",
-  "version": "0.3.1",
-  "publisher": "git-ai-commit-plus",
+  "version": "0.3.2",
+  "publisher": "tingxi8087",
   "license": "MIT",
   "engines": {
     "vscode": "^1.95.0"
@@ -160,5 +160,18 @@
     "@vscode/vsce": "^3.0.0",
     "typescript": "^5.7.0"
   },
-  "icon": "media/icon.png"
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tingxi8087/git-ai-commit-plus.git"
+  },
+  "homepage": "https://github.com/tingxi8087/git-ai-commit-plus#readme",
+  "bugs": {
+    "url": "https://github.com/tingxi8087/git-ai-commit-plus/issues"
+  },
+  "galleryBanner": {
+    "color": "#18242f",
+    "theme": "dark"
+  },
+  "pricing": "Free"
 }
