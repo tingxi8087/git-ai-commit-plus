@@ -1,0 +1,164 @@
+{
+  "name": "git-ai-commit-plus",
+  "displayName": "Git AI Commit Plus",
+  "description": "在源代码管理中一键生成中文或英文提交说明，支持 DeepSeek。",
+  "version": "0.3.1",
+  "publisher": "git-ai-commit-plus",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "git",
+    "commit",
+    "ai",
+    "deepseek",
+    "中文"
+  ],
+  "main": "./dist/src/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    },
+    "virtualWorkspaces": false
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitAiCommit.generate",
+        "title": "生成提交说明",
+        "category": "Git AI Commit",
+        "icon": "$(sparkle)",
+        "enablement": "isWorkspaceTrusted && !gitAiCommit.generating"
+      },
+      {
+        "command": "gitAiCommit.settings",
+        "title": "打开配置",
+        "category": "Git AI Commit",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "gitAiCommit.cancel",
+        "title": "停止生成提交说明",
+        "category": "Git AI Commit",
+        "icon": "$(stop-circle)",
+        "enablement": "gitAiCommit.generating"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "gitAiCommit.generate",
+          "when": "scmProvider == git && !gitAiCommit.generating",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitAiCommit.cancel",
+          "when": "scmProvider == git && gitAiCommit.generating",
+          "group": "navigation@1"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Git AI Commit Plus",
+      "properties": {
+        "gitAiCommit.language": {
+          "type": "string",
+          "enum": [
+            "zh-CN",
+            "en"
+          ],
+          "enumDescriptions": [
+            "中文",
+            "English"
+          ],
+          "default": "zh-CN",
+          "description": "提交说明的语言，独立于配置界面语言。",
+          "scope": "window"
+        },
+        "gitAiCommit.detail": {
+          "type": "string",
+          "enum": [
+            "concise",
+            "standard",
+            "detailed"
+          ],
+          "enumDescriptions": [
+            "简洁：仅一句标题",
+            "标准：标题和关键变更",
+            "详细：标题、分组变更和可确认的影响"
+          ],
+          "default": "concise",
+          "description": "提交说明详细程度。",
+          "scope": "window"
+        },
+        "gitAiCommit.scope": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "staged",
+            "all"
+          ],
+          "enumDescriptions": [
+            "优先暂存，没有暂存则全部变更",
+            "仅暂存变更",
+            "全部变更"
+          ],
+          "default": "auto",
+          "description": "生成提交说明时读取的变更范围。",
+          "scope": "window"
+        },
+        "gitAiCommit.provider": {
+          "type": "string",
+          "enum": [
+            "deepseek"
+          ],
+          "default": "deepseek",
+          "description": "AI 来源。",
+          "scope": "window"
+        },
+        "gitAiCommit.model": {
+          "type": "string",
+          "enum": [
+            "deepseek-flash",
+            "deepseek-v4-pro"
+          ],
+          "enumDescriptions": [
+            "DeepSeek Flash",
+            "DeepSeek V4 Pro"
+          ],
+          "default": "deepseek-flash",
+          "description": "生成提交说明使用的模型。",
+          "scope": "window"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -watch -p tsconfig.json",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "package": "node scripts/package.cjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.95.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.7.0"
+  },
+  "icon": "media/icon.png"
+}
